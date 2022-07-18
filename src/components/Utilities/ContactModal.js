@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ContactModal.css";
 import emailjs from "@emailjs/browser";
-import PopUp from "./PopUp";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Bounce from "react-reveal/Bounce";
 
@@ -11,8 +10,6 @@ export const ContactModal = (props) => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [formHTML, setFormHTML] = useState(null);
-  const [popUpMessage, setPopUpMessage] = useState("");
-  const [showPopUp, setShowPopUp] = useState(false);
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -53,26 +50,26 @@ export const ContactModal = (props) => {
         )
         .then((res) => {
           console.log(res);
-          setPopUpMessage("Successfully sent the your message. \nThank you");
+          props.setPopUpMessage("Successfully sent the your message. \nThank you");
         })
         .catch((err) => {
           console.log(err.status);
-          setPopUpMessage(
+          props.setPopUpMessage(
             'Something went wrong. Please send your message to "mohsin23599@gmail.com"'
           );
         });
       setIsSubmit(false);
       setFormValues(initialValues);
-      setShowPopUp(true);
+      props.setShowPopUp(true);
     }
   }, [formErrors]);
   useEffect(() => {
-    if (showPopUp) {
+    if (props.showPopUp) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [showPopUp]);
+  }, [props.showPopUp]);
 
   return (
     <Bounce bottom collapse when={props.openContactModal}>
@@ -121,11 +118,6 @@ export const ContactModal = (props) => {
             value={"Send"}
           />
         </form>
-        <PopUp
-          message={popUpMessage}
-          showPopUp={showPopUp}
-          setShowPopUp={setShowPopUp}
-        ></PopUp>
       </div>
     </Bounce>
   );

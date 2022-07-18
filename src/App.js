@@ -8,10 +8,14 @@ import React, { useState } from "react";
 import { ContactModal } from "./components/Utilities/ContactModal";
 import { FaPen } from "react-icons/fa";
 import Bounce from "react-reveal/Bounce";
+import PopUp from "./components/Utilities/PopUp";
 
 function App() {
   const [mobileNavbarIsOpen, setMobileNavBarIsOpen] = useState(false);
   const [openContactModal, setOpenContactModal] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState("");
+  const [showPopUp, setShowPopUp] = useState(false);
+
   const handlerIsOpen = () => {
     setMobileNavBarIsOpen((prevState) => {
       return !prevState;
@@ -43,7 +47,16 @@ function App() {
         <ContactModal
           openContactModal={openContactModal}
           setOpenContactModal={setOpenContactModal}
+          showPopUp={showPopUp}
+          setShowPopUp={setShowPopUp}
+          popUpMessage= {popUpMessage}
+          setPopUpMessage = {setPopUpMessage}
         />
+        <PopUp
+          message={popUpMessage}
+          showPopUp={showPopUp}
+          setShowPopUp={setShowPopUp}
+        ></PopUp>
       </div>
     </Router>
   );
